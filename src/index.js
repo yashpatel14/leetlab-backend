@@ -14,10 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 //routes import
 
 import userRouter from "./routes/auth.routes.js";
-
+import problemRouter from "./routes/problem.routes.js"
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/problems", problemRouter);
 
 
 const port = process.env.PORT || 8000
