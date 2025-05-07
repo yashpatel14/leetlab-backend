@@ -16,12 +16,13 @@ app.use(express.urlencoded({ extended: true }));
 import userRouter from "./routes/auth.routes.js";
 import problemRouter from "./routes/problem.routes.js"
 import executionRoute from "./routes/executeCode.routes.js";
+import submissionRoute from "./routes/submission.routes.js";
 
 //routes declaration
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/problems", problemRouter);
 app.use("/api/v1/execute-code" , executionRoute)
-
+app.use("/api/v1/submission" , submissionRoute)
 
 const port = process.env.PORT || 8000
 
