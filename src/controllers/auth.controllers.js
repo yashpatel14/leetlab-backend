@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { db } from "../db/index.js";
 import { UserRole } from "../generated/prisma/index.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const register = asyncHandler(async (req, res) => {
   const { email, password, name } = req.body;
