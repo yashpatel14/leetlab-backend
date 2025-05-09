@@ -190,7 +190,7 @@ const deleteProblem = asyncHandler(async (req, res) => {
   }
   const problem = await db.problem.findUnique({
     where: {
-      problemId,
+      id:problemId,
     },
   });
 
@@ -204,24 +204,21 @@ const deleteProblem = asyncHandler(async (req, res) => {
   .status(200)
   .json(new ApiResponse(200,{},"Problem deleted Successfully"))
 
-    res.status(200).json({
-      success: true,
-      message: "Problem deleted Successfully",
-    });
+    
 });
 
 const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => {
 
   const problems = await db.problem.findMany({
     where:{
-      solvedBy:{
+      ProblemSolved:{
         some:{
           userId:req.user.id
         }
       }
     },
     include:{
-      solvedBy:{
+      ProblemSolved:{
         where:{
           userId:req.user.id
         }
