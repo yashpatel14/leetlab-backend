@@ -49,15 +49,15 @@ const getAllListDetails = asyncHandler(async (req, res) => {
 });
 
 const getPlayListDetails = asyncHandler(async (req, res) => {
-  const { playlistId } = req.params;
+  const { playListId } = req.params;
 
-  if (!playlistId) {
-    throw new ApiError(400, "playlistId required");
+  if (!playListId) {
+    throw new ApiError(400, "playListId required");
   }
 
   const playlist = await db.playlist.findUnique({
     where: {
-      id: playlistId,
+      id: playListId,
       userId: req.user.id,
     },
     include: {
@@ -79,8 +79,8 @@ const getPlayListDetails = asyncHandler(async (req, res) => {
 });
 
 const addProblemToPlaylist = asyncHandler(async (req, res) => {
-  const { playlistId } = req.params;
-  if (!playlistId) {
+  const { playListId } = req.params;
+  if (!playListId) {
     throw new ApiError(400, "playlistId is required");
   }
   const { problemIds } = req.body;
@@ -89,9 +89,9 @@ const addProblemToPlaylist = asyncHandler(async (req, res) => {
   }
 
   // Create records fro each problems in the playlist
-  const problemsInPlaylist = await db.problemsInPlaylist.createMany({
+  const problemsInPlaylist = await db.problemInPlaylist.createMany({
     data: problemIds.map((problemId) => ({
-      playlistId,
+      playListId,
       problemId,
     })),
   });
@@ -108,15 +108,15 @@ const addProblemToPlaylist = asyncHandler(async (req, res) => {
 });
 
 const deletePlaylist = asyncHandler(async (req, res) => {
-  const { playlistId } = req.params;
+  const { playListId } = req.params;
 
-  if (!playlistId) {
-    throw new ApiError(400, "playlistId is required");
+  if (!playListId) {
+    throw new ApiError(400, "playListId is required");
   }
 
   const deletedPlaylist = await db.playlist.delete({
     where: {
-      id: playlistId,
+      id: playListId,
     },
   });
 
@@ -128,18 +128,18 @@ const deletePlaylist = asyncHandler(async (req, res) => {
 });
 
 const removeProblemFromPlaylist = asyncHandler(async (req, res) => {
-  const { playlistId } = req.params;
-  if (!playlistId) {
-    throw new ApiError(400, "playlistId is required");
+  const { playListId } = req.params;
+  if (!playListId) {
+    throw new ApiError(400, "playListId is required");
   }
   const { problemIds } = req.body;
   if (!Array.isArray(problemIds) || problemIds.length === 0) {
     throw new ApiError(400, "Invalid or missing problemsId");
   }
 
-  const deletedProblem = await db.problemsInPlaylist.deleteMany({
+  const deletedProblem = await db.problemInPlaylist.deleteMany({
     where: {
-      playlistId,
+      playListId,
       problemId: {
         in: problemIds,
       },
